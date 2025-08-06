@@ -8,32 +8,42 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 220 13% 9%;
+    --foreground: 220 9% 96%;
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 13% 9%;
+    --card-foreground: 220 9% 96%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 13% 9%;
+    --popover-foreground: 220 9% 96%;
 
-    --primary: 142.1 76.2% 36.3%;
-    --primary-foreground: 355.7 100% 97.3%;
+    --primary: 264 83% 69%;
+    --primary-foreground: 220 13% 9%;
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 220 14% 14%;
+    --secondary-foreground: 220 9% 96%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 220 14% 14%;
+    --muted-foreground: 220 9% 65%;
 
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 220 14% 14%;
+    --accent-foreground: 220 9% 96%;
 
+    /* Modern gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(264 83% 69%), hsl(285 85% 76%));
+    --gradient-secondary: linear-gradient(135deg, hsl(220 14% 14%), hsl(220 14% 18%));
+    --gradient-background: linear-gradient(180deg, hsl(220 13% 9%), hsl(220 13% 7%));
+    
     /* Chat-specific colors */
-    --chat-background: 240 10% 3.9%;
-    --chat-user-message: 142.1 76.2% 36.3%;
-    --chat-bot-message: 240 3.7% 15.9%;
-    --chat-input: 240 3.7% 15.9%;
+    --chat-background: 220 13% 9%;
+    --chat-user-message: 264 83% 69%;
+    --chat-bot-message: 220 14% 14%;
+    --chat-input: 220 14% 14%;
+    --chat-border: 220 14% 18%;
+    
+    /* Modern shadows */
+    --shadow-glow: 0 0 40px hsl(264 83% 69% / 0.15);
+    --shadow-card: 0 8px 32px hsl(220 13% 5% / 0.6);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -62,32 +72,42 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 220 13% 9%;
+    --foreground: 220 9% 96%;
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 13% 9%;
+    --card-foreground: 220 9% 96%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 13% 9%;
+    --popover-foreground: 220 9% 96%;
 
-    --primary: 142.1 76.2% 36.3%;
-    --primary-foreground: 355.7 100% 97.3%;
+    --primary: 264 83% 69%;
+    --primary-foreground: 220 13% 9%;
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 220 14% 14%;
+    --secondary-foreground: 220 9% 96%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 220 14% 14%;
+    --muted-foreground: 220 9% 65%;
 
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 220 14% 14%;
+    --accent-foreground: 220 9% 96%;
 
+    /* Modern gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(264 83% 69%), hsl(285 85% 76%));
+    --gradient-secondary: linear-gradient(135deg, hsl(220 14% 14%), hsl(220 14% 18%));
+    --gradient-background: linear-gradient(180deg, hsl(220 13% 9%), hsl(220 13% 7%));
+    
     /* Chat-specific colors */
-    --chat-background: 240 10% 3.9%;
-    --chat-user-message: 142.1 76.2% 36.3%;
-    --chat-bot-message: 240 3.7% 15.9%;
-    --chat-input: 240 3.7% 15.9%;
+    --chat-background: 220 13% 9%;
+    --chat-user-message: 264 83% 69%;
+    --chat-bot-message: 220 14% 14%;
+    --chat-input: 220 14% 14%;
+    --chat-border: 220 14% 18%;
+    
+    /* Modern shadows */
+    --shadow-glow: 0 0 40px hsl(264 83% 69% / 0.15);
+    --shadow-card: 0 8px 32px hsl(220 13% 5% / 0.6);
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
