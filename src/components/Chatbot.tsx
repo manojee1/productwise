@@ -59,19 +59,7 @@ export const Chatbot = () => {
 
     try {
       const response = await callWebhook(message);
-      
-      // Parse JSON response and extract the output content
-      let content = response;
-      try {
-        const jsonResponse = JSON.parse(response);
-        content = jsonResponse.output || response;
-      } catch {
-        // If not JSON, use response as is
-        content = response;
-      }
-      
-      // Convert markdown to HTML
-      const htmlResponse = await marked(content);
+      const htmlResponse = await marked(response);
       addMessage(htmlResponse, false);
     } catch (error) {
       console.error('Error:', error);
