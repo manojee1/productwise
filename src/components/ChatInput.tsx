@@ -32,7 +32,7 @@ export const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyPress={handleKeyPress}
-        placeholder="What is North Star Metric?"
+        placeholder="What is cohort analysis?"
         disabled={disabled}
         className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       />

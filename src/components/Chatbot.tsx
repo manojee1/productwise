@@ -103,7 +103,7 @@ export const Chatbot = () => {
     <div className="flex flex-col h-screen bg-white">
       {/* Header */}
       <div className="text-center py-8 px-4">
-        <h1 className="text-3xl font-normal text-gray-800 mb-2">ProductWise</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">ProductWise</h1>
         <p className="text-gray-600 text-sm">Powered by advanced AI technology</p>
       </div>
 
