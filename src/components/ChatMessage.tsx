@@ -39,10 +39,9 @@ export const ChatMessage = ({ message, isUser, isLoading }: ChatMessageProps) =>
           </div>
           <div className="bg-gray-50 rounded-lg p-4">
             <div 
-              className="text-sm text-gray-700"
+              className="text-sm text-gray-700 prose prose-sm max-w-none prose-headings:text-gray-800 prose-p:mb-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-1"
               dangerouslySetInnerHTML={{ __html: message }} 
             />
-            <div className="text-xs text-gray-400 mt-2">11:15 AM</div>
           </div>
         </div>
       </div>

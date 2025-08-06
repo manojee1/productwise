@@ -53,14 +53,39 @@ export const Chatbot = () => {
     }
   };
 
+  const formatResponse = (text: string) => {
+    // Clean up the text by removing extra whitespace and formatting
+    let formatted = text
+      .replace(/\\n/g, '\n')
+      .replace(/\n\s*\n/g, '\n\n')
+      .trim();
+    
+    // Convert to markdown format for better rendering
+    return marked(formatted, {
+      breaks: true,
+      gfm: true
+    });
+  };
+
   const handleSendMessage = async (message: string) => {
     addMessage(message, true);
     setIsLoading(true);
 
     try {
       const response = await callWebhook(message);
-      const htmlResponse = await marked(response);
-      addMessage(htmlResponse, false);
+      
+      // Try to parse as JSON first
+      let content;
+      try {
+        const jsonResponse = JSON.parse(response);
+        content = jsonResponse.output || response;
+      } catch {
+        // If not JSON, use the response as is
+        content = response;
+      }
+      
+      const formattedResponse = await formatResponse(content);
+      addMessage(formattedResponse, false);
     } catch (error) {
       console.error('Error:', error);
       toast({
