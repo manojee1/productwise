@@ -12,7 +12,14 @@ interface Message {
 }
 
 export const Chatbot = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "1",
+      text: "Hello! I'm your AI assistant. How can I help you today?",
+      isUser: false,
+      timestamp: new Date(),
+    }
+  ]);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
@@ -68,73 +75,42 @@ export const Chatbot = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen max-w-4xl mx-auto bg-background">
+    <div className="flex flex-col h-screen bg-white">
       {/* Header */}
-      <div className="p-6 border-b border-border">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
-            <span className="text-lg font-bold text-primary-foreground">P</span>
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">ProductWise</h1>
-            <p className="text-sm text-muted-foreground">Your intelligent product assistant</p>
-          </div>
-        </div>
+      <div className="text-center py-8 px-4">
+        <h1 className="text-3xl font-normal text-gray-800 mb-2">ProductWise</h1>
+        <p className="text-gray-600 text-sm">Powered by advanced AI technology</p>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4">
-        {messages.length === 0 && (
-          <div className="text-center mt-12">
-            <div className="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <span className="text-xl font-bold text-primary-foreground">P</span>
-            </div>
-            <h2 className="text-xl font-semibold text-foreground mb-2">Welcome to ProductWise!</h2>
-            <p className="text-muted-foreground mb-6">
-              I'm your intelligent product assistant. How can I help you today?
-            </p>
-            <div className="flex flex-wrap gap-2 justify-center max-w-lg mx-auto">
-              {[
-                "Analyze market trends",
-                "Product recommendations",
-                "Feature analysis",
-                "Competitive insights"
-              ].map((suggestion, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleSendMessage(suggestion)}
-                  className="px-3 py-2 bg-muted hover:bg-muted/80 rounded-lg text-sm text-foreground transition-colors"
-                >
-                  {suggestion}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-        
-        {messages.map((message) => (
-          <ChatMessage
-            key={message.id}
-            message={message.text}
-            isUser={message.isUser}
-          />
-        ))}
-        
-        {isLoading && (
-          <ChatMessage
-            message=""
-            isUser={false}
-            isLoading={true}
-          />
-        )}
+      <div className="flex-1 overflow-y-auto px-4 pb-4">
+        <div className="max-w-2xl mx-auto space-y-4">
+          {messages.map((message) => (
+            <ChatMessage
+              key={message.id}
+              message={message.text}
+              isUser={message.isUser}
+            />
+          ))}
+          
+          {isLoading && (
+            <ChatMessage
+              message=""
+              isUser={false}
+              isLoading={true}
+            />
+          )}
+        </div>
       </div>
 
       {/* Input */}
-      <div className="border-t border-border">
-        <ChatInput 
-          onSendMessage={handleSendMessage}
-          disabled={isLoading}
-        />
+      <div className="px-4 pb-6">
+        <div className="max-w-2xl mx-auto">
+          <ChatInput 
+            onSendMessage={handleSendMessage}
+            disabled={isLoading}
+          />
+        </div>
       </div>
     </div>
   );

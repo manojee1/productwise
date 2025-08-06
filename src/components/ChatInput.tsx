@@ -18,34 +18,31 @@ export const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
     }
   };
 
-  const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
       e.preventDefault();
       handleSend();
     }
   };
 
   return (
-    <div className="p-4">
-      <div className="flex items-end space-x-2">
-        <Textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="Type your message..."
-          disabled={disabled}
-          className="min-h-[44px] max-h-32 resize-none"
-          rows={1}
-        />
-        <Button
-          onClick={handleSend}
-          disabled={!message.trim() || disabled}
-          size="sm"
-          className="h-11 px-3"
-        >
-          <Send className="h-4 w-4" />
-        </Button>
-      </div>
+    <div className="relative">
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        onKeyPress={handleKeyPress}
+        placeholder="What is North Star Metric?"
+        disabled={disabled}
+        className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      />
+      <Button
+        onClick={handleSend}
+        disabled={!message.trim() || disabled}
+        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md"
+      >
+        <Send className="h-4 w-4" />
+      </Button>
     </div>
   );
 };

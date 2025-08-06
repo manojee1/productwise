@@ -9,15 +9,40 @@ interface ChatMessageProps {
 export const ChatMessage = ({ message, isUser, isLoading }: ChatMessageProps) => {
   if (isLoading) {
     return (
-      <div className="flex items-start space-x-3">
-        <div className="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
-          <span className="text-sm font-medium text-primary-foreground">P</span>
+      <div className="flex items-start space-x-3 mb-4">
+        <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+          <span className="text-sm font-medium text-gray-600">AI</span>
         </div>
-        <div className="flex-1 bg-muted rounded-lg p-4">
-          <div className="flex space-x-1">
-            <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-pulse" />
-            <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-pulse [animation-delay:0.2s]" />
-            <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-pulse [animation-delay:0.4s]" />
+        <div className="flex-1">
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div className="flex space-x-1">
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" />
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse [animation-delay:0.2s]" />
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse [animation-delay:0.4s]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isUser) {
+    return (
+      <div className="flex items-start space-x-3 mb-4">
+        <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <span className="text-sm font-medium text-gray-600">AI</span>
+        </div>
+        <div className="flex-1">
+          <div className="mb-1">
+            <span className="text-sm font-medium text-gray-900">AI Assistant</span>
+            <p className="text-xs text-gray-500">Ask me anything!</p>
+          </div>
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div 
+              className="text-sm text-gray-700"
+              dangerouslySetInnerHTML={{ __html: message }} 
+            />
+            <div className="text-xs text-gray-400 mt-2">11:15 AM</div>
           </div>
         </div>
       </div>
@@ -25,32 +50,14 @@ export const ChatMessage = ({ message, isUser, isLoading }: ChatMessageProps) =>
   }
 
   return (
-    <div className={cn(
-      "flex items-start space-x-3",
-      isUser && "flex-row-reverse space-x-reverse"
-    )}>
-      <div className={cn(
-        "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium",
-        isUser 
-          ? "bg-primary text-primary-foreground" 
-          : "bg-gradient-to-r from-primary to-secondary text-primary-foreground"
-      )}>
-        {isUser ? "U" : "P"}
+    <div className="flex items-start space-x-3 mb-4 flex-row-reverse space-x-reverse">
+      <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+        <span className="text-sm font-medium text-white">U</span>
       </div>
-      <div className={cn(
-        "flex-1 max-w-[80%] rounded-lg p-4",
-        isUser 
-          ? "bg-primary text-primary-foreground" 
-          : "bg-muted text-foreground"
-      )}>
-        {isUser ? (
+      <div className="flex-1">
+        <div className="bg-blue-500 text-white rounded-lg p-4 ml-auto max-w-xs">
           <p className="text-sm">{message}</p>
-        ) : (
-          <div 
-            className="text-sm prose prose-sm max-w-none dark:prose-invert"
-            dangerouslySetInnerHTML={{ __html: message }} 
-          />
-        )}
+        </div>
       </div>
     </div>
   );
