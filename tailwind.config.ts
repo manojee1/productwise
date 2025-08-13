@@ -53,11 +53,16 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				chat: {
-					background: 'hsl(var(--chat-background))',
+					background: 'rgba(var(--chat-background))',
 					'user-message': 'hsl(var(--chat-user-message))',
-					'bot-message': 'hsl(var(--chat-bot-message))',
-					input: 'hsl(var(--chat-input))',
-					border: 'hsl(var(--chat-border))'
+					'bot-message': 'rgba(var(--chat-bot-message))',
+					input: 'rgba(var(--chat-input))',
+					border: 'rgba(var(--chat-border))'
+				},
+				glass: {
+					bg: 'rgba(var(--glass-bg))',
+					border: 'rgba(var(--glass-border))',
+					text: 'hsl(var(--glass-text))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -73,11 +78,17 @@ export default {
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
 				'gradient-secondary': 'var(--gradient-secondary)',
-				'gradient-background': 'var(--gradient-background)'
+				'gradient-background': 'var(--gradient-background)',
+				'gradient-glass': 'var(--gradient-glass)'
 			},
 			boxShadow: {
 				'glow': 'var(--shadow-glow)',
-				'card': 'var(--shadow-card)'
+				'card': 'var(--shadow-card)',
+				'glass': 'var(--shadow-glass)',
+				'glass-hover': 'var(--shadow-glass-hover)'
+			},
+			backdropBlur: {
+				'glass': '10px'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

@@ -26,23 +26,25 @@ export const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
   };
 
   return (
-    <div className="relative">
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyPress={handleKeyPress}
-        placeholder="What is cohort analysis?"
-        disabled={disabled}
-        className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      />
-      <Button
-        onClick={handleSend}
-        disabled={!message.trim() || disabled}
-        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md"
-      >
-        <Send className="h-4 w-4" />
-      </Button>
+    <div className="relative group">
+      <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-1 shadow-glass hover:shadow-glass-hover transition-all duration-300">
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder="What is cohort analysis?"
+          disabled={disabled}
+          className="w-full px-4 py-3 pr-12 bg-transparent text-glass-text placeholder:text-glass-text/60 focus:outline-none rounded-xl"
+        />
+        <Button
+          onClick={handleSend}
+          disabled={!message.trim() || disabled}
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-primary hover:bg-primary/90 text-primary-foreground p-2 rounded-xl shadow-lg transition-all duration-200 hover:scale-105 disabled:opacity-50"
+        >
+          <Send className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 };

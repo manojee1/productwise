@@ -9,41 +9,50 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 20%;
+    --foreground: 280 5% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 20%;
+    --card-foreground: 280 5% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 20%;
+    --popover-foreground: 280 5% 10%;
 
-    --primary: 0 0% 40%;
+    --primary: 270 80% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 95%;
-    --secondary-foreground: 0 0% 20%;
+    --secondary: 270 20% 95%;
+    --secondary-foreground: 280 5% 10%;
 
-    --muted: 0 0% 95%;
-    --muted-foreground: 0 0% 50%;
+    --muted: 270 20% 95%;
+    --muted-foreground: 280 10% 50%;
 
-    --accent: 0 0% 95%;
-    --accent-foreground: 0 0% 20%;
+    --accent: 270 30% 90%;
+    --accent-foreground: 280 5% 10%;
 
-    /* Modern gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(0 0% 40%), hsl(0 0% 60%));
-    --gradient-secondary: linear-gradient(135deg, hsl(0 0% 95%), hsl(0 0% 90%));
-    --gradient-background: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 98%));
+    /* Glassmorphism gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(260 100% 75%), hsl(290 100% 85%));
+    --gradient-secondary: linear-gradient(135deg, hsl(270 50% 80%), hsl(310 60% 90%));
+    --gradient-background: linear-gradient(135deg, hsl(260 80% 70%), hsl(290 70% 80%), hsl(320 60% 85%));
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
     
-    /* Chat-specific colors */
-    --chat-background: 0 0% 100%;
-    --chat-user-message: 0 0% 40%;
-    --chat-bot-message: 0 0% 95%;
-    --chat-input: 0 0% 95%;
-    --chat-border: 0 0% 90%;
+    /* Glass colors with transparency */
+    --glass-bg: 255 255 255 / 0.15;
+    --glass-border: 255 255 255 / 0.2;
+    --glass-text: 280 5% 10%;
+    --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+    --glass-glow: 0 0 40px rgba(138, 43, 226, 0.3);
     
-    /* Modern shadows */
-    --shadow-glow: 0 0 40px hsl(0 0% 40% / 0.15);
-    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.1);
+    /* Chat glassmorphism colors */
+    --chat-background: 255 255 255 / 0.1;
+    --chat-user-message: 270 80% 60%;
+    --chat-bot-message: 255 255 255 / 0.2;
+    --chat-input: 255 255 255 / 0.15;
+    --chat-border: 255 255 255 / 0.2;
+    
+    /* Glass shadows and effects */
+    --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.15);
+    --shadow-glass-hover: 0 15px 35px rgba(31, 38, 135, 0.25);
+    --blur-glass: blur(10px);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
