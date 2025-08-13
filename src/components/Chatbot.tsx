@@ -104,7 +104,7 @@ export const Chatbot = () => {
       {/* Header */}
       <div className="text-center py-8 px-4">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">ProductWise</h1>
-        <p className="text-gray-600 text-sm">Powered by advanced AI technology</p>
+        <p className="text-gray-600 text-sm">An AI powered Product Management chatbot</p>
       </div>
 
       {/* Messages */}
