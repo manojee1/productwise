@@ -107,7 +107,7 @@ export const Chatbot = () => {
       {/* Header */}
       <div className="relative z-10 text-center py-8 px-4">
         <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-6 mx-auto max-w-md shadow-glass">
-          <h1 className="text-4xl font-bold text-glass-text mb-2 bg-gradient-primary bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold text-white mb-2">
             ProductWise
           </h1>
           <p className="text-glass-text/80 text-sm">An AI powered Product Management chatbot</p>
