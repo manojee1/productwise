@@ -39,7 +39,7 @@ export const ChatMessage = ({ message, isUser, isLoading }: ChatMessageProps) =>
           </div>
           <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 shadow-glass hover:shadow-glass-hover transition-all duration-300">
             <div 
-              className="text-sm text-glass-text prose prose-sm max-w-none prose-headings:text-glass-text prose-p:mb-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-1 prose-strong:text-primary prose-code:text-primary prose-code:bg-primary/10 prose-code:px-1 prose-code:rounded"
+              className="text-sm text-glass-text prose prose-sm max-w-none prose-headings:text-glass-text prose-headings:font-bold prose-p:mb-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-1 prose-li:text-foreground prose-ul:list-disc prose-ol:list-decimal prose-strong:text-primary prose-code:text-primary prose-code:bg-primary/10 prose-code:px-1 prose-code:rounded"
               dangerouslySetInnerHTML={{ __html: message }} 
             />
           </div>
