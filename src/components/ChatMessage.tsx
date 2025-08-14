@@ -39,7 +39,7 @@ export const ChatMessage = ({ message, isUser, isLoading }: ChatMessageProps) =>
           </div>
           <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 shadow-glass hover:shadow-glass-hover transition-all duration-300">
             <div 
-              className="text-sm text-glass-text prose prose-sm max-w-none prose-headings:text-foreground prose-headings:font-bold prose-p:mb-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-1 prose-ul:list-disc prose-ol:list-decimal prose-strong:text-primary prose-code:text-primary prose-code:bg-primary/10 prose-code:px-1 prose-code:rounded [&_ul_li]:!text-black [&_ul_li::marker]:!text-black [&_ol_li]:!text-black [&_ol_li::marker]:!text-black [&_h1]:!text-foreground [&_h1]:!font-bold [&_h2]:!text-foreground [&_h2]:!font-bold [&_h3]:!text-foreground [&_h3]:!font-bold"
+              className="text-sm text-glass-text prose prose-sm max-w-none prose-headings:!text-foreground prose-headings:!font-bold prose-p:mb-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-1 prose-ul:list-disc prose-ol:list-decimal prose-strong:text-primary prose-code:text-primary prose-code:bg-primary/10 prose-code:px-1 prose-code:rounded [&_ul_li]:!text-black [&_ul_li::marker]:!text-black [&_ol_li]:!text-black [&_ol_li::marker]:!text-black [&_h1]:!text-foreground [&_h1]:!font-bold [&_h2]:!text-foreground [&_h2]:!font-bold [&_h3]:!text-foreground [&_h3]:!font-bold [&_h4]:!text-foreground [&_h4]:!font-bold [&_h5]:!text-foreground [&_h5]:!font-bold [&_h6]:!text-foreground [&_h6]:!font-bold"
               dangerouslySetInnerHTML={{ __html: message }} 
             />
           </div>
