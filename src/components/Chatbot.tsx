@@ -100,22 +100,22 @@ export const Chatbot = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-background relative overflow-hidden">
+    <div className="flex flex-col min-h-screen w-full bg-gradient-background relative overflow-hidden">
       {/* Glassmorphism background overlay */}
       <div className="absolute inset-0 bg-gradient-background opacity-90"></div>
       
       {/* Header */}
-      <div className="relative z-10 text-center py-8 px-4">
-        <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-6 mx-auto max-w-2xl shadow-glass">
-          <h1 className="text-4xl font-bold text-white mb-2">
+      <div className="relative z-10 text-center py-4 sm:py-8 px-4">
+        <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 sm:p-6 mx-auto max-w-2xl shadow-glass">
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">
             ProductWise
           </h1>
-          <p className="text-glass-text/80 text-sm">An AI powered Product Management chatbot</p>
+          <p className="text-glass-text/80 text-xs sm:text-sm">An AI powered Product Management chatbot</p>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="relative z-10 flex-1 overflow-y-auto px-4 pb-4">
+      <div className="relative z-10 flex-1 overflow-y-auto px-2 sm:px-4 pb-4">
         <div className="max-w-2xl mx-auto space-y-4">
           {messages.map((message) => (
             <ChatMessage
@@ -136,7 +136,7 @@ export const Chatbot = () => {
       </div>
 
       {/* Input */}
-      <div className="relative z-10 px-4 pb-6">
+      <div className="relative z-10 px-2 sm:px-4 pb-4 sm:pb-6">
         <div className="max-w-2xl mx-auto">
           <ChatInput 
             onSendMessage={handleSendMessage}
