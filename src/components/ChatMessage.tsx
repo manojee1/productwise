@@ -40,7 +40,7 @@ export const ChatMessage = ({ message, isUser, isLoading }: ChatMessageProps) =>
           <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 shadow-glass hover:shadow-glass-hover transition-all duration-300">
             <div 
               className="text-sm text-glass-text prose prose-sm max-w-none prose-p:mb-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-1 prose-ul:list-disc prose-ol:list-decimal prose-strong:!font-bold prose-strong:!text-black prose-code:text-primary prose-code:bg-primary/10 prose-code:px-1 prose-code:rounded [&>h1]:!font-bold [&>h1]:!text-black [&>h2]:!font-bold [&>h2]:!text-black [&>h3]:!font-bold [&>h3]:!text-black [&>h4]:!font-bold [&>h4]:!text-black [&>h5]:!font-bold [&>h5]:!text-black [&>h6]:!font-bold [&>h6]:!text-black [&_ul>li::marker]:!text-black [&_ol>li::marker]:!text-black"
-              dangerouslySetInnerHTML={{ __html: message.replace(/^(Short Answer|How to measure[^:]*|Best practices[^:]*|Sources):/gm, '<strong>$1:</strong>') }} 
+              dangerouslySetInnerHTML={{ __html: message.replace(/(Short Answer|How to measure.*?|Best practices.*?|Sources):/gi, '<strong style="font-weight: bold !important; color: hsl(280 5% 10%) !important;">$1:</strong>') }} 
             />
           </div>
         </div>
