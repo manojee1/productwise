@@ -144,32 +144,4 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
   
-  /* Section headers styling */
-  .prose-p-section-headers p {
-    /* Target common section header patterns */
-  }
-  
-  /* Make section headers bold - target specific patterns */
-  .prose-p-section-headers p:has-text("Short Answer"),
-  .prose-p-section-headers p:has-text("How to measure"),
-  .prose-p-section-headers p:has-text("Best practices"),
-  .prose-p-section-headers p:has-text("Sources"),
-  .prose-p-section-headers p:has-text("Key takeaways"),
-  .prose-p-section-headers p:has-text("Overview"),
-  .prose-p-section-headers p:has-text("Summary") {
-    font-weight: bold !important;
-    color: hsl(280 5% 10%) !important;
-  }
-  
-  /* Alternative approach - target paragraphs that end with colon */
-  .prose-p-section-headers p {
-    /* Use regex-like targeting for section headers */
-  }
-  
-  .prose-p-section-headers p:nth-child(1),
-  .prose-p-section-headers strong:first-child {
-    font-weight: bold !important;
-    color: hsl(280 5% 10%) !important;
-  }
-}
 }
