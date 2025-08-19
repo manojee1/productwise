@@ -143,4 +143,16 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Section headers styling */
+  .prose-p-section-headers p {
+    /* Bold text that starts a line and ends with colon */
+    background-image: linear-gradient(to right, transparent 0%, transparent 100%);
+  }
+  
+  /* Target text patterns like "Short Answer:" at the beginning of paragraphs */
+  .prose-p-section-headers p::first-line {
+    font-weight: bold !important;
+    color: hsl(280 5% 10%) !important;
+  }
 }
