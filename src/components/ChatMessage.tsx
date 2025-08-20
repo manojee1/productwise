@@ -39,8 +39,13 @@ export const ChatMessage = ({ message, isUser, isLoading }: ChatMessageProps) =>
           </div>
           <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 shadow-glass hover:shadow-glass-hover transition-all duration-300">
             <div 
-              className="text-sm text-glass-text prose prose-sm max-w-none prose-p:mb-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-1 prose-ul:list-disc prose-ol:list-decimal prose-strong:text-primary prose-code:text-primary prose-code:bg-primary/10 prose-code:px-1 prose-code:rounded prose-a:font-normal prose-a:text-primary prose-a:no-underline hover:prose-a:underline [&_strong_a]:!font-normal [&>h1]:!font-bold [&>h1]:!text-black [&>h2]:!font-bold [&>h2]:!text-black [&>h3]:!font-bold [&>h3]:!text-black [&>h4]:!font-bold [&>h4]:!text-black [&>h5]:!font-bold [&>h5]:!text-black [&>h6]:!font-bold [&>h6]:!text-black [&_ul>li::marker]:!text-black [&_ol>li::marker]:!text-black"
-              dangerouslySetInnerHTML={{ __html: message.replace(/^Sources?$/gm, '<strong>$&</strong>') }} 
+              className="text-sm text-glass-text prose prose-sm max-w-none prose-p:mb-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-1 prose-ul:list-disc prose-ol:list-decimal prose-strong:text-primary prose-code:text-primary prose-code:bg-primary/10 prose-code:px-1 prose-code:rounded [&_a]:!font-normal [&_a]:!text-primary [&_a]:!no-underline hover:[&_a]:!underline [&_strong_a]:!font-normal [&>h1]:!font-bold [&>h1]:!text-black [&>h2]:!font-bold [&>h2]:!text-black [&>h3]:!font-bold [&>h3]:!text-black [&>h4]:!font-bold [&>h4]:!text-black [&>h5]:!font-bold [&>h5]:!text-black [&>h6]:!font-bold [&>h6]:!text-black [&_ul>li::marker]:!text-black [&_ol>li::marker]:!text-black"
+              dangerouslySetInnerHTML={{ __html: (() => {
+                const processedMessage = message.replace(/^Sources?$/gm, '<strong>$&</strong>');
+                console.log('Original message:', message);
+                console.log('Processed message:', processedMessage);
+                return processedMessage;
+              })() }}
             />
           </div>
         </div>
