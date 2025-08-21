@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChatMessage } from "./ChatMessage";
 import { ChatInput } from "./ChatInput";
+import { SuggestedQuestions } from "./SuggestedQuestions";
 import { useToast } from "@/hooks/use-toast";
 import { marked } from "marked";
 
@@ -21,6 +22,7 @@ export const Chatbot = () => {
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  const [suggestedMessage, setSuggestedMessage] = useState("");
   const { toast } = useToast();
 
   const addMessage = (text: string, isUser: boolean) => {
@@ -67,7 +69,12 @@ export const Chatbot = () => {
     });
   };
 
+  const handleQuestionClick = (question: string) => {
+    setSuggestedMessage(question);
+  };
+
   const handleSendMessage = async (message: string) => {
+    setSuggestedMessage(""); // Clear suggested message after sending
     addMessage(message, true);
     setIsLoading(true);
 
@@ -138,9 +145,11 @@ export const Chatbot = () => {
       {/* Input */}
       <div className="relative z-10 px-2 sm:px-4 pb-4 sm:pb-6">
         <div className="max-w-2xl mx-auto">
+          <SuggestedQuestions onQuestionClick={handleQuestionClick} />
           <ChatInput 
             onSendMessage={handleSendMessage}
             disabled={isLoading}
+            suggestedMessage={suggestedMessage}
           />
         </div>
       </div>

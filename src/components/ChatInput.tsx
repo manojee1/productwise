@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent } from "react";
+import { useState, KeyboardEvent, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send } from "lucide-react";
@@ -6,10 +6,18 @@ import { Send } from "lucide-react";
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
   disabled?: boolean;
+  suggestedMessage?: string;
 }
 
-export const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
+export const ChatInput = ({ onSendMessage, disabled, suggestedMessage }: ChatInputProps) => {
   const [message, setMessage] = useState("");
+
+  // Update message when suggestedMessage changes
+  useEffect(() => {
+    if (suggestedMessage) {
+      setMessage(suggestedMessage);
+    }
+  }, [suggestedMessage]);
 
   const handleSend = () => {
     if (message.trim() && !disabled) {
