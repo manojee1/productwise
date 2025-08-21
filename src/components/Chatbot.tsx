@@ -23,6 +23,7 @@ export const Chatbot = () => {
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const [suggestedMessage, setSuggestedMessage] = useState("");
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const { toast } = useToast();
 
   const addMessage = (text: string, isUser: boolean) => {
@@ -93,6 +94,7 @@ export const Chatbot = () => {
       
       const formattedResponse = await formatResponse(content);
       addMessage(formattedResponse, false);
+      setRefreshTrigger(prev => prev + 1); // Refresh suggested questions
     } catch (error) {
       console.error('Error:', error);
       toast({
@@ -145,7 +147,7 @@ export const Chatbot = () => {
       {/* Input */}
       <div className="relative z-10 px-2 sm:px-4 pb-4 sm:pb-6">
         <div className="max-w-2xl mx-auto">
-          <SuggestedQuestions onQuestionClick={handleQuestionClick} />
+          <SuggestedQuestions onQuestionClick={handleQuestionClick} refreshTrigger={refreshTrigger} />
           <ChatInput 
             onSendMessage={handleSendMessage}
             disabled={isLoading}

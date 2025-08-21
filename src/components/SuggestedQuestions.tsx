@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 
 interface SuggestedQuestionsProps {
   onQuestionClick: (question: string) => void;
+  refreshTrigger?: number;
 }
 
 const QUESTIONS = [
@@ -11,7 +12,7 @@ const QUESTIONS = [
   "Why do products fail?"
 ];
 
-export const SuggestedQuestions = ({ onQuestionClick }: SuggestedQuestionsProps) => {
+export const SuggestedQuestions = ({ onQuestionClick, refreshTrigger }: SuggestedQuestionsProps) => {
   const [displayQuestions, setDisplayQuestions] = useState<string[]>([]);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ export const SuggestedQuestions = ({ onQuestionClick }: SuggestedQuestionsProps)
     const selected = shuffled.slice(0, 2);
     
     setDisplayQuestions(selected);
-  }, []);
+  }, [refreshTrigger]);
 
   return (
     <div className="mb-4">
