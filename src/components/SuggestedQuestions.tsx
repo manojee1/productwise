@@ -25,7 +25,7 @@ export const SuggestedQuestions = ({ onQuestionClick, refreshTrigger }: Suggeste
 
   return (
     <div className="mb-4">
-      <div className="bg-glass-bg backdrop-blur-glass border border-purple-500 rounded-2xl p-4 shadow-glass">
+      <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 shadow-glass hover:shadow-glass-hover transition-all duration-300">
         <p className="text-xs text-glass-text/70 mb-3 text-center">Try asking about these topics:</p>
         <div className="grid grid-cols-1 gap-2">
           {displayQuestions.map((question, index) => (
