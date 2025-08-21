@@ -15,30 +15,25 @@ export const SuggestedQuestions = ({ onQuestionClick }: SuggestedQuestionsProps)
   const [displayQuestions, setDisplayQuestions] = useState<string[]>([]);
 
   useEffect(() => {
-    // Shuffle and select 4 questions (with potential duplicates)
-    const shuffled = [...QUESTIONS];
-    const selected = [];
-    
-    for (let i = 0; i < 4; i++) {
-      const randomIndex = Math.floor(Math.random() * shuffled.length);
-      selected.push(shuffled[randomIndex]);
-    }
+    // Shuffle questions and select 2 unique ones
+    const shuffled = [...QUESTIONS].sort(() => Math.random() - 0.5);
+    const selected = shuffled.slice(0, 2);
     
     setDisplayQuestions(selected);
   }, []);
 
   return (
     <div className="mb-4">
-      <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 shadow-glass">
+      <div className="bg-glass-bg backdrop-blur-glass border border-purple-500 rounded-2xl p-4 shadow-glass">
         <p className="text-xs text-glass-text/70 mb-3 text-center">Try asking about these topics:</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 gap-2">
           {displayQuestions.map((question, index) => (
             <Button
               key={index}
               variant="outline"
               size="sm"
               onClick={() => onQuestionClick(question)}
-              className="text-xs sm:text-sm h-auto py-2 px-3 bg-transparent border-glass-border text-glass-text hover:bg-glass-bg/50 hover:border-primary/50 transition-all duration-200 rounded-xl whitespace-normal text-left justify-start"
+              className="text-xs sm:text-sm h-auto py-2 px-3 bg-transparent border-purple-400 text-glass-text hover:bg-purple-600/20 hover:border-purple-600 transition-all duration-200 rounded-xl whitespace-normal text-left justify-start"
             >
               {question}
             </Button>
