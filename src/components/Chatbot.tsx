@@ -147,7 +147,7 @@ export const Chatbot = () => {
       {/* Input */}
       <div className="relative z-10 px-2 sm:px-4 pb-4 sm:pb-6">
         <div className="max-w-2xl mx-auto">
-          <SuggestedQuestions onQuestionClick={handleQuestionClick} refreshTrigger={refreshTrigger} />
+          <SuggestedQuestions onQuestionClick={handleQuestionClick} refreshTrigger={refreshTrigger} isVisible={!isLoading} />
           <ChatInput 
             onSendMessage={handleSendMessage}
             disabled={isLoading}

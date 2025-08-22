@@ -3,11 +3,13 @@ import { Button } from "@/components/ui/button";
 interface SuggestedQuestionsProps {
   onQuestionClick: (question: string) => void;
   refreshTrigger?: number;
+  isVisible?: boolean;
 }
 const QUESTIONS = ["How does channel strategy impact pricing ?", "How to become better at storytelling?", "Why do products fail?"];
 export const SuggestedQuestions = ({
   onQuestionClick,
-  refreshTrigger
+  refreshTrigger,
+  isVisible = true
 }: SuggestedQuestionsProps) => {
   const [displayQuestions, setDisplayQuestions] = useState<string[]>([]);
   useEffect(() => {
@@ -16,7 +18,7 @@ export const SuggestedQuestions = ({
     const selected = shuffled.slice(0, 2);
     setDisplayQuestions(selected);
   }, [refreshTrigger]);
-  return <div className="mb-4">
+  return <div className={`mb-4 transition-all duration-300 ${isVisible ? 'opacity-100 animate-fade-in' : 'opacity-0 animate-fade-out'}`}>
       <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 shadow-glass hover:shadow-glass-hover transition-all duration-300">
         <p className="text-xs text-glass-text/70 mb-3 text-left font-semibold">Suggested  Questions:</p>
         <div className="grid grid-cols-1 gap-2">
