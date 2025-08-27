@@ -155,6 +155,30 @@ export const Chatbot = () => {
           />
         </div>
       </div>
+
+      {/* Footer */}
+      <div className="relative z-10 px-2 sm:px-4 pb-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 shadow-glass">
+            <div className="text-left space-y-1">
+              <p className="text-xs text-glass-text/70">
+                © 2024 ProductWise - An AI powered Product Management chatbot
+              </p>
+              <p className="text-xs text-glass-text/60">
+                Built with good vibes by{" "}
+                <a 
+                  href="https://www.linkedin.com/in/aggarwalmanoj/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary hover:text-primary/80 transition-colors underline"
+                >
+                  Manoj Aggarwal
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
