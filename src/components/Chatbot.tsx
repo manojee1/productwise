@@ -128,7 +128,7 @@ export const Chatbot = () => {
         <div className="bg-purple-900 py-6 px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-left space-y-1">
-              <p className="text-xs text-white/90">© 2024 ProductWise - An AI power Product Management chatbot</p>
+              <p className="text-xs text-white/90">© 2024 ProductWise - An AI Product Management chatbot</p>
               <p className="text-xs text-white/80">
                 Built with good vibes by{" "}
                 <a href="https://www.linkedin.com/in/aggarwalmanoj/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 transition-colors underline font-medium">
