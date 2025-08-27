@@ -4,50 +4,43 @@ import { ChatInput } from "./ChatInput";
 import { SuggestedQuestions } from "./SuggestedQuestions";
 import { useToast } from "@/hooks/use-toast";
 import { marked } from "marked";
-
 interface Message {
   id: string;
   text: string;
   isUser: boolean;
   timestamp: Date;
 }
-
 export const Chatbot = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      text: "Hello! I'm your AI assistant. How can I help you today?",
-      isUser: false,
-      timestamp: new Date(),
-    }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([{
+    id: "1",
+    text: "Hello! I'm your AI assistant. How can I help you today?",
+    isUser: false,
+    timestamp: new Date()
+  }]);
   const [isLoading, setIsLoading] = useState(false);
   const [suggestedMessage, setSuggestedMessage] = useState("");
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const addMessage = (text: string, isUser: boolean) => {
     const newMessage: Message = {
       id: Date.now().toString(),
       text,
       isUser,
-      timestamp: new Date(),
+      timestamp: new Date()
     };
     setMessages(prev => [...prev, newMessage]);
   };
-
   const callWebhook = async (userMessage: string) => {
     const webhookUrl = `https://jonam.app.n8n.cloud/webhook/0e2a6b11-b82c-4e49-8209-1eb8c6c2d7bc?message=${encodeURIComponent(userMessage)}`;
-    
     try {
       const response = await fetch(webhookUrl, {
-        method: 'GET',
+        method: 'GET'
       });
-      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
       const responseText = await response.text();
       return responseText;
     } catch (error) {
@@ -55,33 +48,26 @@ export const Chatbot = () => {
       throw error;
     }
   };
-
   const formatResponse = (text: string) => {
     // Clean up the text by removing extra whitespace and formatting
-    let formatted = text
-      .replace(/\\n/g, '\n')
-      .replace(/\n\s*\n/g, '\n\n')
-      .trim();
-    
+    let formatted = text.replace(/\\n/g, '\n').replace(/\n\s*\n/g, '\n\n').trim();
+
     // Convert to markdown format for better rendering
     return marked(formatted, {
       breaks: true,
       gfm: true
     });
   };
-
   const handleQuestionClick = (question: string) => {
     setSuggestedMessage(question);
   };
-
   const handleSendMessage = async (message: string) => {
     setSuggestedMessage(""); // Clear suggested message after sending
     addMessage(message, true);
     setIsLoading(true);
-
     try {
       const response = await callWebhook(message);
-      
+
       // Try to parse as JSON first
       let content;
       try {
@@ -91,7 +77,6 @@ export const Chatbot = () => {
         // If not JSON, use the response as is
         content = response;
       }
-      
       const formattedResponse = await formatResponse(content);
       addMessage(formattedResponse, false);
       setRefreshTrigger(prev => prev + 1); // Refresh suggested questions
@@ -100,16 +85,14 @@ export const Chatbot = () => {
       toast({
         title: "Error",
         description: "Failed to get response. Please try again.",
-        variant: "destructive",
+        variant: "destructive"
       });
       addMessage("Sorry, I encountered an error. Please try again.", false);
     } finally {
       setIsLoading(false);
     }
   };
-
-  return (
-    <div className="flex flex-col min-h-screen w-full bg-gradient-background relative overflow-hidden">
+  return <div className="flex flex-col min-h-screen w-full bg-gradient-background relative overflow-hidden">
       {/* Glassmorphism background overlay */}
       <div className="absolute inset-0 bg-gradient-background opacity-90"></div>
       
@@ -126,21 +109,9 @@ export const Chatbot = () => {
       {/* Messages */}
       <div className="relative z-10 flex-1 overflow-y-auto px-2 sm:px-4 pb-4">
         <div className="max-w-2xl mx-auto space-y-4">
-          {messages.map((message) => (
-            <ChatMessage
-              key={message.id}
-              message={message.text}
-              isUser={message.isUser}
-            />
-          ))}
+          {messages.map(message => <ChatMessage key={message.id} message={message.text} isUser={message.isUser} />)}
           
-          {isLoading && (
-            <ChatMessage
-              message=""
-              isUser={false}
-              isLoading={true}
-            />
-          )}
+          {isLoading && <ChatMessage message="" isUser={false} isLoading={true} />}
         </div>
       </div>
 
@@ -148,11 +119,7 @@ export const Chatbot = () => {
       <div className="relative z-10 px-2 sm:px-4 pb-4 sm:pb-6">
         <div className="max-w-2xl mx-auto">
           <SuggestedQuestions onQuestionClick={handleQuestionClick} refreshTrigger={refreshTrigger} isVisible={!isLoading} />
-          <ChatInput 
-            onSendMessage={handleSendMessage}
-            disabled={isLoading}
-            suggestedMessage={suggestedMessage}
-          />
+          <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} suggestedMessage={suggestedMessage} />
         </div>
       </div>
 
@@ -161,17 +128,10 @@ export const Chatbot = () => {
         <div className="bg-purple-900 py-6 px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-left space-y-1">
-              <p className="text-xs text-white/90">
-                © 2024 ProductWise - An AI powered Product Management chatbot
-              </p>
+              <p className="text-xs text-white/90">© 2024 ProductWise - An AI power Product Management chatbot</p>
               <p className="text-xs text-white/80">
                 Built with good vibes by{" "}
-                <a 
-                  href="https://www.linkedin.com/in/aggarwalmanoj/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-white hover:text-white/80 transition-colors underline font-medium"
-                >
+                <a href="https://www.linkedin.com/in/aggarwalmanoj/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 transition-colors underline font-medium">
                   Manoj Aggarwal
                 </a>
               </p>
@@ -179,6 +139,5 @@ export const Chatbot = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
