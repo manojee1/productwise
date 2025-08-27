@@ -127,7 +127,7 @@ export const Chatbot = () => {
       <div className="relative z-10">
         <div className="bg-purple-900 py-6 px-4">
           <div className="max-w-2xl mx-auto">
-            <div className="text-left space-y-1">
+            <div className="flex justify-between items-center">
               <p className="text-xs text-white/90">© 2024 ProductWise - An AI Product Management chatbot</p>
               <p className="text-xs text-white/80">
                 Built with good vibes by{" "}
