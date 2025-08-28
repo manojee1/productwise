@@ -11,12 +11,7 @@ interface Message {
   timestamp: Date;
 }
 export const Chatbot = () => {
-  const [messages, setMessages] = useState<Message[]>([{
-    id: "1",
-    text: "Hello! I'm your AI assistant. How can I help you today?",
-    isUser: false,
-    timestamp: new Date()
-  }]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [suggestedMessage, setSuggestedMessage] = useState("");
   const [refreshTrigger, setRefreshTrigger] = useState(0);
