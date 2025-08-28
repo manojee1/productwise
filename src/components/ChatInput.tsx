@@ -19,8 +19,10 @@ export const ChatInput = ({ onSendMessage, disabled, suggestedMessage }: ChatInp
     }
   }, [suggestedMessage]);
 
+  const defaultText = "Hello, I'm your AI assistant, what can I help you with today?";
+  
   const handleSend = () => {
-    if (message.trim() && !disabled) {
+    if (message.trim() && !disabled && message.trim() !== defaultText) {
       onSendMessage(message.trim());
       setMessage("");
     }
@@ -41,13 +43,13 @@ export const ChatInput = ({ onSendMessage, disabled, suggestedMessage }: ChatInp
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyPress={handleKeyPress}
-          placeholder="What is cohort analysis?"
+          placeholder="Hello, I'm your AI assistant, what can I help you with today?"
           disabled={disabled}
           className="w-full px-4 py-3 pr-12 bg-transparent text-glass-text placeholder:text-glass-text/60 focus:outline-none rounded-xl"
         />
         <Button
           onClick={handleSend}
-          disabled={!message.trim() || disabled}
+          disabled={!message.trim() || disabled || message.trim() === defaultText}
           className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-primary hover:bg-primary/90 text-primary-foreground p-2 rounded-xl shadow-lg transition-all duration-200 hover:scale-105 disabled:opacity-50"
         >
           <Send className="h-4 w-4" />
