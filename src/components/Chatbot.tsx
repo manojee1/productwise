@@ -125,7 +125,7 @@ export const Chatbot = () => {
 
       {/* Footer */}
       <div className="relative z-10">
-        <div className="bg-purple-900 py-6 px-4">
+        <div className="bg-gradient-background py-6 px-4">
           <div className="max-w-2xl mx-auto">
             <div className="flex justify-between items-center">
               <p className="text-xs text-white/90">© 2024 ProductWise - An AI Product Management chatbot</p>
