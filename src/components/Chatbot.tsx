@@ -125,7 +125,7 @@ export const Chatbot = () => {
             <div className="flex justify-between items-center">
               <p className="text-xs text-white/90">© 2024 ProductWise - An AI Product Management chatbot</p>
               <p className="text-xs text-white/80">
-                Built with good vibes by{" "}
+                Built by{" "}
                 <a href="https://www.linkedin.com/in/aggarwalmanoj/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 transition-colors underline font-medium">
                   Manoj Aggarwal
                 </a>
