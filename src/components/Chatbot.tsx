@@ -123,7 +123,7 @@ export const Chatbot = () => {
         <div className="bg-gradient-background py-6 px-4">
           <div className="max-w-2xl mx-auto">
             <div className="flex justify-between items-center">
-              <p className="text-xs text-white/90">© 2024 ProductWise - </p>
+              <p className="text-xs text-white/90">© 2024 ProductWise</p>
               <p className="text-xs text-white/80">
                 Built by{" "}
                 <a href="https://www.linkedin.com/in/aggarwalmanoj/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 transition-colors underline font-medium">
