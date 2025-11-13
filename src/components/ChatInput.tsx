@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent, useEffect } from "react";
+import { useState, KeyboardEvent, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send, Mic, MicOff } from "lucide-react";
@@ -14,6 +14,7 @@ export const ChatInput = ({ onSendMessage, disabled, suggestedMessage }: ChatInp
   const [message, setMessage] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const { toast } = useToast();
+  const recognitionRef = useRef<any>(null);
 
   // Update message when suggestedMessage changes
   useEffect(() => {
@@ -48,41 +49,62 @@ export const ChatInput = ({ onSendMessage, disabled, suggestedMessage }: ChatInp
       return;
     }
 
-    if (isRecording) {
+    // If already recording, stop it
+    if (isRecording && recognitionRef.current) {
+      recognitionRef.current.stop();
+      recognitionRef.current = null;
       setIsRecording(false);
       return;
     }
 
+    // Create new recognition instance
     const recognition = new (window as any).webkitSpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = false;
     recognition.lang = 'en-US';
+    recognitionRef.current = recognition;
 
     recognition.onstart = () => {
+      console.log('Speech recognition started');
       setIsRecording(true);
     };
 
     recognition.onresult = (event: any) => {
       const transcript = event.results[0][0].transcript;
+      console.log('Transcript received:', transcript);
       setMessage(transcript);
       setIsRecording(false);
+      recognitionRef.current = null;
     };
 
     recognition.onerror = (event: any) => {
       console.error('Speech recognition error:', event.error);
       setIsRecording(false);
-      toast({
-        title: "Error",
-        description: "Failed to recognize speech. Please try again.",
-        variant: "destructive",
-      });
+      recognitionRef.current = null;
+      
+      // Only show error toast for actual errors, not when user stops recording
+      if (event.error !== 'aborted' && event.error !== 'no-speech') {
+        toast({
+          title: "Error",
+          description: "Failed to recognize speech. Please try again.",
+          variant: "destructive",
+        });
+      }
     };
 
     recognition.onend = () => {
+      console.log('Speech recognition ended');
       setIsRecording(false);
+      recognitionRef.current = null;
     };
 
-    recognition.start();
+    try {
+      recognition.start();
+    } catch (error) {
+      console.error('Failed to start recognition:', error);
+      setIsRecording(false);
+      recognitionRef.current = null;
+    }
   };
 
   return (
