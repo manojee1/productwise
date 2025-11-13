@@ -126,7 +126,7 @@ export const ChatInput = ({ onSendMessage, disabled, suggestedMessage }: ChatInp
             className={`${
               isRecording 
                 ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
-                : 'bg-secondary hover:bg-secondary/90'
+                : 'bg-primary hover:bg-primary/90'
             } text-primary-foreground p-2 rounded-xl shadow-lg transition-all duration-200 hover:scale-105 disabled:opacity-50`}
             type="button"
           >
