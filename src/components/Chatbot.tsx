@@ -9,6 +9,7 @@ interface Message {
   text: string;
   isUser: boolean;
   timestamp: Date;
+  isStreaming?: boolean;
 }
 export const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -18,14 +19,22 @@ export const Chatbot = () => {
   const {
     toast
   } = useToast();
-  const addMessage = (text: string, isUser: boolean) => {
+  const addMessage = (text: string, isUser: boolean, isStreaming: boolean = false) => {
     const newMessage: Message = {
       id: Date.now().toString(),
       text,
       isUser,
-      timestamp: new Date()
+      timestamp: new Date(),
+      isStreaming
     };
     setMessages(prev => [...prev, newMessage]);
+    return newMessage.id;
+  };
+
+  const markStreamComplete = (messageId: string) => {
+    setMessages(prev => prev.map(msg => 
+      msg.id === messageId ? { ...msg, isStreaming: false } : msg
+    ));
   };
   const callWebhook = async (userMessage: string) => {
     const webhookUrl = `https://jonam.app.n8n.cloud/webhook/0e2a6b11-b82c-4e49-8209-1eb8c6c2d7bc?message=${encodeURIComponent(userMessage)}`;
@@ -73,7 +82,7 @@ export const Chatbot = () => {
         content = response;
       }
       const formattedResponse = await formatResponse(content);
-      addMessage(formattedResponse, false);
+      addMessage(formattedResponse, false, true); // Start streaming
       setRefreshTrigger(prev => prev + 1); // Refresh suggested questions
     } catch (error) {
       console.error('Error:', error);
@@ -104,7 +113,15 @@ export const Chatbot = () => {
       {/* Messages */}
       <div className="relative z-10 flex-1 overflow-y-auto px-2 sm:px-4 pb-4">
         <div className="max-w-2xl mx-auto space-y-4">
-          {messages.map(message => <ChatMessage key={message.id} message={message.text} isUser={message.isUser} />)}
+          {messages.map(message => (
+            <ChatMessage 
+              key={message.id} 
+              message={message.text} 
+              isUser={message.isUser} 
+              isStreaming={message.isStreaming}
+              onStreamComplete={() => markStreamComplete(message.id)}
+            />
+          ))}
           
           {isLoading && <ChatMessage message="" isUser={false} isLoading={true} />}
         </div>
