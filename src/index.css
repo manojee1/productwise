@@ -2,101 +2,136 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Minimal OpenAI-inspired design system. All colors MUST be HSL. */
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 13%;
+    --foreground: 280 5% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 13%;
+    --card-foreground: 280 5% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 13%;
+    --popover-foreground: 280 5% 10%;
 
-    --primary: 0 0% 13%;
+    --primary: 270 80% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 13%;
+    --secondary: 270 20% 95%;
+    --secondary-foreground: 280 5% 10%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 270 20% 95%;
+    --muted-foreground: 280 10% 50%;
 
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 13%;
+    --accent: 270 30% 90%;
+    --accent-foreground: 280 5% 10%;
 
-    /* Minimal chat colors */
-    --chat-background: 0 0% 100%;
-    --chat-user-message: 0 0% 96%;
-    --chat-bot-message: 0 0% 100%;
-    --chat-input: 0 0% 100%;
-    --chat-border: 0 0% 90%;
+    /* Glassmorphism gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(260 100% 75%), hsl(290 100% 85%));
+    --gradient-secondary: linear-gradient(135deg, hsl(270 50% 80%), hsl(310 60% 90%));
+    --gradient-background: linear-gradient(135deg, hsl(260 80% 70%), hsl(290 70% 80%), hsl(320 60% 85%));
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+    
+    /* Glass colors with transparency */
+    --glass-bg: 255 255 255 / 0.15;
+    --glass-border: 255 255 255 / 0.2;
+    --glass-text: 280 5% 10%;
+    --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+    --glass-glow: 0 0 40px rgba(138, 43, 226, 0.3);
+    
+    /* Chat glassmorphism colors */
+    --chat-background: 255 255 255 / 0.1;
+    --chat-user-message: 270 80% 60%;
+    --chat-bot-message: 255 255 255 / 0.2;
+    --chat-input: 255 255 255 / 0.15;
+    --chat-border: 255 255 255 / 0.2;
+    
+    /* Glass shadows and effects */
+    --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.15);
+    --shadow-glass-hover: 0 15px 35px rgba(31, 38, 135, 0.25);
+    --blur-glass: blur(10px);
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 13%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 13%;
-    --sidebar-primary: 0 0% 13%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 13%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 0 0% 13%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 220 10% 10%;
-    --foreground: 0 0% 95%;
+    --background: 0 0% 10%;
+    --foreground: 0 0% 90%;
 
-    --card: 220 10% 12%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 90%;
 
-    --popover: 220 10% 12%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 90%;
 
-    --primary: 0 0% 95%;
-    --primary-foreground: 220 10% 10%;
+    --primary: 0 0% 70%;
+    --primary-foreground: 0 0% 10%;
 
-    --secondary: 220 10% 15%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 90%;
 
-    --muted: 220 10% 18%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 220 10% 15%;
-    --accent-foreground: 0 0% 95%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 90%;
 
-    /* Minimal chat colors - dark */
-    --chat-background: 220 10% 10%;
-    --chat-user-message: 220 10% 18%;
-    --chat-bot-message: 220 10% 12%;
-    --chat-input: 220 10% 15%;
-    --chat-border: 220 10% 20%;
+    /* Modern gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 70%), hsl(0 0% 50%));
+    --gradient-secondary: linear-gradient(135deg, hsl(0 0% 15%), hsl(0 0% 20%));
+    --gradient-background: linear-gradient(180deg, hsl(0 0% 10%), hsl(0 0% 8%));
+    
+    /* Chat-specific colors */
+    --chat-background: 0 0% 10%;
+    --chat-user-message: 0 0% 70%;
+    --chat-bot-message: 0 0% 15%;
+    --chat-input: 0 0% 15%;
+    --chat-border: 0 0% 20%;
+    
+    /* Modern shadows */
+    --shadow-glow: 0 0 40px hsl(0 0% 70% / 0.15);
+    --shadow-card: 0 8px 32px hsl(0 0% 5% / 0.6);
 
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 220 10% 20%;
-    --input: 220 10% 20%;
-    --ring: 0 0% 95%;
-
-    --sidebar-background: 220 10% 10%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 0 0% 95%;
-    --sidebar-primary-foreground: 220 10% 10%;
-    --sidebar-accent: 220 10% 15%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 220 10% 20%;
-    --sidebar-ring: 0 0% 95%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -106,6 +141,6 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground;
   }
 }

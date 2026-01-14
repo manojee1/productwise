@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { ChatMessage } from "./ChatMessage";
 import { ChatInput } from "./ChatInput";
 import { SuggestedQuestions } from "./SuggestedQuestions";
+import { useToast } from "@/hooks/use-toast";
 import { marked } from "marked";
-
 interface Message {
   id: string;
   text: string;
@@ -11,32 +11,24 @@ interface Message {
   timestamp: Date;
   isStreaming?: boolean;
 }
-
 export const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [suggestedMessage, setSuggestedMessage] = useState<string>("");
+  const [suggestedMessage, setSuggestedMessage] = useState("");
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isLoading]);
-
-  const addMessage = (text: string, isUser: boolean, isStreaming: boolean = false): string => {
-    const id = Date.now().toString();
-    setMessages(prev => [...prev, {
-      id,
+  const {
+    toast
+  } = useToast();
+  const addMessage = (text: string, isUser: boolean, isStreaming: boolean = false) => {
+    const newMessage: Message = {
+      id: Date.now().toString(),
       text,
       isUser,
       timestamp: new Date(),
       isStreaming
-    }]);
-    return id;
+    };
+    setMessages(prev => [...prev, newMessage]);
+    return newMessage.id;
   };
 
   const markStreamComplete = (messageId: string) => {
@@ -44,84 +36,83 @@ export const Chatbot = () => {
       msg.id === messageId ? { ...msg, isStreaming: false } : msg
     ));
   };
-
-  const callWebhook = async (userMessage: string): Promise<string> => {
+  const callWebhook = async (userMessage: string) => {
+    const webhookUrl = `https://jonam.app.n8n.cloud/webhook/0e2a6b11-b82c-4e49-8209-1eb8c6c2d7bc?message=${encodeURIComponent(userMessage)}`;
     try {
-      const encodedMessage = encodeURIComponent(userMessage);
-      const response = await fetch(
-        `https://jonam.app.n8n.cloud/webhook/0e2a6b11-b82c-4e49-8209-1eb8c6c2d7bc?message=${encodedMessage}`
-      );
-
+      const response = await fetch(webhookUrl, {
+        method: 'GET'
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      const data = await response.json();
-      return data.output || data.response || data.message || JSON.stringify(data);
+      const responseText = await response.text();
+      return responseText;
     } catch (error) {
-      console.error("Webhook error:", error);
-      return "I'm sorry, there was an error processing your request. Please try again.";
+      console.error('Webhook call failed:', error);
+      throw error;
     }
   };
+  const formatResponse = (text: string) => {
+    // Clean up the text by removing extra whitespace and formatting
+    let formatted = text.replace(/\\n/g, '\n').replace(/\n\s*\n/g, '\n\n').trim();
 
-  const formatResponse = (text: string): string => {
-    // Configure marked for better formatting
-    marked.setOptions({
+    // Convert to markdown format for better rendering
+    return marked(formatted, {
       breaks: true,
-      gfm: true,
+      gfm: true
     });
-    
-    // Convert markdown to HTML
-    const htmlContent = marked.parse(text);
-    return htmlContent as string;
   };
-
+  const handleQuestionClick = (question: string) => {
+    setSuggestedMessage(question);
+  };
   const handleSendMessage = async (message: string) => {
-    // Add user message
+    setSuggestedMessage(""); // Clear suggested message after sending
     addMessage(message, true);
-    setSuggestedMessage("");
     setIsLoading(true);
-    setRefreshTrigger(prev => prev + 1);
-
     try {
-      // Call the webhook
       const response = await callWebhook(message);
-      
-      // Format and add bot response with streaming enabled
-      const formattedResponse = formatResponse(response);
-      addMessage(formattedResponse, false, true);
+
+      // Try to parse as JSON first
+      let content;
+      try {
+        const jsonResponse = JSON.parse(response);
+        content = jsonResponse.output || response;
+      } catch {
+        // If not JSON, use the response as is
+        content = response;
+      }
+      const formattedResponse = await formatResponse(content);
+      addMessage(formattedResponse, false, true); // Start streaming
+      setRefreshTrigger(prev => prev + 1); // Refresh suggested questions
     } catch (error) {
-      addMessage("I'm sorry, there was an error processing your request. Please try again.", false);
+      console.error('Error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to get response. Please try again.",
+        variant: "destructive"
+      });
+      addMessage("Sorry, I encountered an error. Please try again.", false);
     } finally {
       setIsLoading(false);
     }
   };
-
-  const handleQuestionClick = (question: string) => {
-    setSuggestedMessage(question);
-  };
-
-  return (
-    <div className="flex flex-col min-h-screen w-full bg-background">
+  return <div className="flex flex-col min-h-screen w-full bg-gradient-background relative overflow-hidden">
+      {/* Glassmorphism background overlay */}
+      <div className="absolute inset-0 bg-gradient-background opacity-90"></div>
+      
       {/* Header */}
-      <div className="border-b border-border">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <h1 className="text-2xl font-semibold text-foreground">
+      <div className="relative z-10 text-center py-4 sm:py-8 px-4">
+        <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 sm:p-6 mx-auto max-w-2xl shadow-glass">
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">
             ProductWise
           </h1>
-          <p className="text-muted-foreground text-sm mt-1">AI-powered Product Management assistant</p>
+          <p className="text-glass-text/80 text-xs sm:text-sm">An AI powered Product Management chatbot</p>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-3xl mx-auto px-4">
-          {messages.length === 0 && (
-            <div className="py-20 text-center">
-              <h2 className="text-xl font-medium text-foreground mb-2">How can I help you today?</h2>
-              <p className="text-muted-foreground text-sm">Ask me anything about product management</p>
-            </div>
-          )}
+      <div className="relative z-10 flex-1 overflow-y-auto px-2 sm:px-4 pb-4">
+        <div className="max-w-2xl mx-auto space-y-4">
           {messages.map(message => (
             <ChatMessage 
               key={message.id} 
@@ -133,23 +124,32 @@ export const Chatbot = () => {
           ))}
           
           {isLoading && <ChatMessage message="" isUser={false} isLoading={true} />}
-          <div ref={messagesEndRef} />
         </div>
       </div>
 
       {/* Input */}
-      <div className="border-t border-border bg-background">
-        <div className="max-w-3xl mx-auto px-4 py-4">
+      <div className="relative z-10 px-2 sm:px-4 pb-4 sm:pb-6">
+        <div className="max-w-2xl mx-auto">
           <SuggestedQuestions onQuestionClick={handleQuestionClick} refreshTrigger={refreshTrigger} isVisible={!isLoading} />
           <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} suggestedMessage={suggestedMessage} />
-          <p className="text-xs text-muted-foreground text-center mt-3">
-            Built by{" "}
-            <a href="https://www.linkedin.com/in/aggarwalmanoj/" target="_blank" rel="noopener noreferrer" className="text-foreground hover:underline">
-              Manoj Aggarwal
-            </a>
-          </p>
         </div>
       </div>
-    </div>
-  );
+
+      {/* Footer */}
+      <div className="relative z-10">
+        <div className="bg-gradient-background py-6 px-4">
+          <div className="max-w-2xl mx-auto">
+            <div className="flex justify-between items-center">
+              <p className="text-xs text-white/90">© 2024 ProductWise</p>
+              <p className="text-xs text-white/80">
+                Built by{" "}
+                <a href="https://www.linkedin.com/in/aggarwalmanoj/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 transition-colors underline font-medium">
+                  Manoj Aggarwal
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>;
 };
