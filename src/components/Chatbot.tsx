@@ -47,20 +47,17 @@ export const Chatbot = () => {
 
   const callWebhook = async (userMessage: string): Promise<string> => {
     try {
-      const response = await fetch("https://manojlovable.app.n8n.cloud/webhook/productwise", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: userMessage }),
-      });
+      const encodedMessage = encodeURIComponent(userMessage);
+      const response = await fetch(
+        `https://jonam.app.n8n.cloud/webhook/0e2a6b11-b82c-4e49-8209-1eb8c6c2d7bc?message=${encodedMessage}`
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      return data.output || "I'm sorry, I couldn't process your request.";
+      return data.output || data.response || data.message || JSON.stringify(data);
     } catch (error) {
       console.error("Webhook error:", error);
       return "I'm sorry, there was an error processing your request. Please try again.";
