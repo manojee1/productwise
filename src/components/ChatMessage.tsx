@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { StreamingText } from "./StreamingText";
+import { User, Sparkles } from "lucide-react";
 
 interface ChatMessageProps {
   message: string;
@@ -12,16 +13,16 @@ interface ChatMessageProps {
 export const ChatMessage = ({ message, isUser, isLoading, isStreaming, onStreamComplete }: ChatMessageProps) => {
   if (isLoading) {
     return (
-      <div className="flex items-start space-x-3 mb-6 animate-fade-in">
-        <div className="w-12 h-12 bg-gradient-glass backdrop-blur-glass border border-glass-border rounded-full flex items-center justify-center shadow-glass">
-          <span className="text-sm font-bold text-primary">AI</span>
-        </div>
-        <div className="flex-1">
-          <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 shadow-glass">
-            <div className="flex space-x-1">
-              <div className="w-3 h-3 bg-primary/60 rounded-full animate-pulse" />
-              <div className="w-3 h-3 bg-primary/60 rounded-full animate-pulse [animation-delay:0.2s]" />
-              <div className="w-3 h-3 bg-primary/60 rounded-full animate-pulse [animation-delay:0.4s]" />
+      <div className="py-6 animate-fade-in">
+        <div className="max-w-3xl mx-auto flex gap-4">
+          <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center flex-shrink-0">
+            <Sparkles className="h-4 w-4 text-muted-foreground" />
+          </div>
+          <div className="flex-1 pt-1">
+            <div className="flex space-x-1.5">
+              <div className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-pulse" />
+              <div className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-pulse [animation-delay:0.2s]" />
+              <div className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-pulse [animation-delay:0.4s]" />
             </div>
           </div>
         </div>
@@ -31,17 +32,17 @@ export const ChatMessage = ({ message, isUser, isLoading, isStreaming, onStreamC
 
   if (!isUser) {
     return (
-      <div className="flex items-start space-x-3 mb-6 animate-fade-in">
-        <div className="w-12 h-12 bg-gradient-glass backdrop-blur-glass border border-glass-border rounded-full flex items-center justify-center flex-shrink-0 shadow-glass">
-          <span className="text-sm font-bold text-primary">AI</span>
-        </div>
-        <div className="flex-1">
-          <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 shadow-glass hover:shadow-glass-hover transition-all duration-300">
+      <div className="py-6 animate-fade-in">
+        <div className="max-w-3xl mx-auto flex gap-4">
+          <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center flex-shrink-0">
+            <Sparkles className="h-4 w-4 text-muted-foreground" />
+          </div>
+          <div className="flex-1 pt-0.5">
             {isStreaming ? (
               <StreamingText html={message} speed={3} onComplete={onStreamComplete} />
             ) : (
               <div 
-                className="text-sm text-glass-text prose prose-sm max-w-none prose-p:mb-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-1 prose-ul:list-disc prose-ol:list-decimal prose-strong:text-primary prose-code:text-primary prose-code:bg-primary/10 prose-code:px-1 prose-code:rounded [&_a]:!font-normal [&_a]:!text-primary [&_a]:!no-underline hover:[&_a]:!underline [&_p_strong]:!text-black [&_p_strong]:!font-bold [&_.sources-list_li::marker]:!text-primary [&>h1]:!font-bold [&>h1]:!text-black [&>h2]:!font-bold [&>h2]:!text-black [&>h3]:!font-bold [&>h3]:!text-black [&>h4]:!font-bold [&>h4]:!text-black [&>h5]:!font-bold [&>h5]:!text-black [&>h6]:!font-bold [&>h6]:!text-black [&_ul>li::marker]:!text-black [&_ol>li::marker]:!text-black"
+                className="text-[15px] leading-relaxed text-foreground prose prose-sm max-w-none prose-p:mb-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-1 prose-ul:list-disc prose-ol:list-decimal prose-strong:text-foreground prose-strong:font-semibold prose-code:text-foreground prose-code:bg-secondary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm [&_a]:text-foreground [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:opacity-70 [&>h1]:font-semibold [&>h1]:text-foreground [&>h2]:font-semibold [&>h2]:text-foreground [&>h3]:font-semibold [&>h3]:text-foreground"
                 dangerouslySetInnerHTML={{ __html: message.replace(/<p>(Sources?)<\/p>/g, '<p><strong>$1</strong></p>').replace(/<p><strong>Sources?<\/strong><\/p>\s*<ul>/g, '<p><strong>Sources</strong></p><ul class="sources-list">') }}
               />
             )}
@@ -52,13 +53,13 @@ export const ChatMessage = ({ message, isUser, isLoading, isStreaming, onStreamC
   }
 
   return (
-    <div className="flex items-start space-x-3 mb-6 flex-row-reverse space-x-reverse animate-fade-in">
-      <div className="w-12 h-12 bg-primary backdrop-blur-glass border border-primary/30 rounded-full flex items-center justify-center flex-shrink-0 shadow-glass">
-        <span className="text-sm font-bold text-primary-foreground">U</span>
-      </div>
-      <div className="flex-1">
-        <div className="bg-primary/20 backdrop-blur-glass border border-primary/30 text-glass-text rounded-2xl p-4 ml-auto max-w-sm shadow-glass hover:shadow-glass-hover transition-all duration-300">
-          <p className="text-sm font-medium">{message}</p>
+    <div className="py-6 bg-secondary/50 animate-fade-in">
+      <div className="max-w-3xl mx-auto flex gap-4">
+        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+          <User className="h-4 w-4 text-primary-foreground" />
+        </div>
+        <div className="flex-1 pt-0.5">
+          <p className="text-[15px] leading-relaxed text-foreground">{message}</p>
         </div>
       </div>
     </div>

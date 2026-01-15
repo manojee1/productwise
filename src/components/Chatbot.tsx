@@ -4,6 +4,7 @@ import { ChatInput } from "./ChatInput";
 import { SuggestedQuestions } from "./SuggestedQuestions";
 import { useToast } from "@/hooks/use-toast";
 import { marked } from "marked";
+
 interface Message {
   id: string;
   text: string;
@@ -11,14 +12,14 @@ interface Message {
   timestamp: Date;
   isStreaming?: boolean;
 }
+
 export const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [suggestedMessage, setSuggestedMessage] = useState("");
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
+
   const addMessage = (text: string, isUser: boolean, isStreaming: boolean = false) => {
     const newMessage: Message = {
       id: Date.now().toString(),
@@ -36,6 +37,7 @@ export const Chatbot = () => {
       msg.id === messageId ? { ...msg, isStreaming: false } : msg
     ));
   };
+
   const callWebhook = async (userMessage: string) => {
     const webhookUrl = `https://jonam.app.n8n.cloud/webhook/0e2a6b11-b82c-4e49-8209-1eb8c6c2d7bc?message=${encodeURIComponent(userMessage)}`;
     try {
@@ -52,38 +54,35 @@ export const Chatbot = () => {
       throw error;
     }
   };
-  const formatResponse = (text: string) => {
-    // Clean up the text by removing extra whitespace and formatting
-    let formatted = text.replace(/\\n/g, '\n').replace(/\n\s*\n/g, '\n\n').trim();
 
-    // Convert to markdown format for better rendering
+  const formatResponse = (text: string) => {
+    let formatted = text.replace(/\\n/g, '\n').replace(/\n\s*\n/g, '\n\n').trim();
     return marked(formatted, {
       breaks: true,
       gfm: true
     });
   };
+
   const handleQuestionClick = (question: string) => {
     setSuggestedMessage(question);
   };
+
   const handleSendMessage = async (message: string) => {
-    setSuggestedMessage(""); // Clear suggested message after sending
+    setSuggestedMessage("");
     addMessage(message, true);
     setIsLoading(true);
     try {
       const response = await callWebhook(message);
-
-      // Try to parse as JSON first
       let content;
       try {
         const jsonResponse = JSON.parse(response);
         content = jsonResponse.output || response;
       } catch {
-        // If not JSON, use the response as is
         content = response;
       }
       const formattedResponse = await formatResponse(content);
-      addMessage(formattedResponse, false, true); // Start streaming
-      setRefreshTrigger(prev => prev + 1); // Refresh suggested questions
+      addMessage(formattedResponse, false, true);
+      setRefreshTrigger(prev => prev + 1);
     } catch (error) {
       console.error('Error:', error);
       toast({
@@ -96,60 +95,68 @@ export const Chatbot = () => {
       setIsLoading(false);
     }
   };
-  return <div className="flex flex-col min-h-screen w-full bg-gradient-background relative overflow-hidden">
-      {/* Glassmorphism background overlay */}
-      <div className="absolute inset-0 bg-gradient-background opacity-90"></div>
-      
+
+  return (
+    <div className="flex flex-col min-h-screen bg-background">
       {/* Header */}
-      <div className="relative z-10 text-center py-4 sm:py-8 px-4">
-        <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 sm:p-6 mx-auto max-w-2xl shadow-glass">
-          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">
-            ProductWise
-          </h1>
-          <p className="text-glass-text/80 text-xs sm:text-sm">An AI powered Product Management chatbot</p>
+      <header className="border-b border-border bg-background sticky top-0 z-10">
+        <div className="max-w-3xl mx-auto px-4 py-4">
+          <h1 className="text-xl font-semibold text-foreground">ProductWise</h1>
+          <p className="text-sm text-muted-foreground">AI-powered Product Management Assistant</p>
         </div>
-      </div>
+      </header>
 
       {/* Messages */}
-      <div className="relative z-10 flex-1 overflow-y-auto px-2 sm:px-4 pb-4">
-        <div className="max-w-2xl mx-auto space-y-4">
-          {messages.map(message => (
-            <ChatMessage 
-              key={message.id} 
-              message={message.text} 
-              isUser={message.isUser} 
-              isStreaming={message.isStreaming}
-              onStreamComplete={() => markStreamComplete(message.id)}
-            />
-          ))}
-          
-          {isLoading && <ChatMessage message="" isUser={false} isLoading={true} />}
-        </div>
-      </div>
-
-      {/* Input */}
-      <div className="relative z-10 px-2 sm:px-4 pb-4 sm:pb-6">
-        <div className="max-w-2xl mx-auto">
-          <SuggestedQuestions onQuestionClick={handleQuestionClick} refreshTrigger={refreshTrigger} isVisible={!isLoading} />
-          <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} suggestedMessage={suggestedMessage} />
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div className="relative z-10">
-        <div className="bg-gradient-background py-6 px-4">
-          <div className="max-w-2xl mx-auto">
-            <div className="flex justify-between items-center">
-              <p className="text-xs text-white/90">© 2024 ProductWise</p>
-              <p className="text-xs text-white/80">
-                Built by{" "}
-                <a href="https://www.linkedin.com/in/aggarwalmanoj/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 transition-colors underline font-medium">
-                  Manoj Aggarwal
-                </a>
-              </p>
-            </div>
+      <main className="flex-1 overflow-y-auto">
+        {messages.length === 0 ? (
+          <div className="max-w-3xl mx-auto px-4 py-20 text-center">
+            <h2 className="text-2xl font-semibold text-foreground mb-2">How can I help you today?</h2>
+            <p className="text-muted-foreground">Ask me anything about product management</p>
           </div>
+        ) : (
+          <div>
+            {messages.map(message => (
+              <ChatMessage 
+                key={message.id} 
+                message={message.text} 
+                isUser={message.isUser} 
+                isStreaming={message.isStreaming}
+                onStreamComplete={() => markStreamComplete(message.id)}
+              />
+            ))}
+            {isLoading && <ChatMessage message="" isUser={false} isLoading={true} />}
+          </div>
+        )}
+      </main>
+
+      {/* Suggested Questions & Input */}
+      <div className="sticky bottom-0">
+        <div className="max-w-3xl mx-auto px-4 pb-2">
+          <SuggestedQuestions 
+            onQuestionClick={handleQuestionClick} 
+            refreshTrigger={refreshTrigger} 
+            isVisible={!isLoading && messages.length === 0} 
+          />
+        </div>
+        <ChatInput 
+          onSendMessage={handleSendMessage} 
+          disabled={isLoading} 
+          suggestedMessage={suggestedMessage} 
+        />
+        <div className="bg-background py-3 text-center border-t border-border">
+          <p className="text-xs text-muted-foreground">
+            Built by{" "}
+            <a 
+              href="https://www.linkedin.com/in/aggarwalmanoj/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="underline underline-offset-2 hover:text-foreground transition-colors"
+            >
+              Manoj Aggarwal
+            </a>
+          </p>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };

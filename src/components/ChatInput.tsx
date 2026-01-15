@@ -1,6 +1,5 @@
 import { useState, KeyboardEvent, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Send, Mic, MicOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -16,7 +15,6 @@ export const ChatInput = ({ onSendMessage, disabled, suggestedMessage }: ChatInp
   const { toast } = useToast();
   const recognitionRef = useRef<any>(null);
 
-  // Update message when suggestedMessage changes
   useEffect(() => {
     if (suggestedMessage) {
       setMessage(suggestedMessage);
@@ -49,7 +47,6 @@ export const ChatInput = ({ onSendMessage, disabled, suggestedMessage }: ChatInp
       return;
     }
 
-    // If already recording, stop it
     if (isRecording && recognitionRef.current) {
       recognitionRef.current.stop();
       recognitionRef.current = null;
@@ -57,7 +54,6 @@ export const ChatInput = ({ onSendMessage, disabled, suggestedMessage }: ChatInp
       return;
     }
 
-    // Create new recognition instance
     const recognition = new (window as any).webkitSpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = false;
@@ -82,7 +78,6 @@ export const ChatInput = ({ onSendMessage, disabled, suggestedMessage }: ChatInp
       setIsRecording(false);
       recognitionRef.current = null;
       
-      // Only show error toast for actual errors, not when user stops recording
       if (event.error !== 'aborted' && event.error !== 'no-speech') {
         toast({
           title: "Error",
@@ -108,37 +103,43 @@ export const ChatInput = ({ onSendMessage, disabled, suggestedMessage }: ChatInp
   };
 
   return (
-    <div className="relative group">
-      <div className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-1 shadow-glass hover:shadow-glass-hover transition-all duration-300">
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="Hello, I'm your AI assistant, what can I help you with today?"
-          disabled={disabled}
-          className="w-full px-4 py-3 pr-12 bg-transparent text-glass-text placeholder:text-glass-text/60 focus:outline-none rounded-xl"
-        />
-        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex gap-2">
-          <Button
-            onClick={toggleSpeechRecognition}
+    <div className="border-t border-border bg-background">
+      <div className="max-w-3xl mx-auto px-4 py-4">
+        <div className="relative flex items-center gap-2 bg-secondary rounded-2xl px-4 py-3 border border-border">
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Message ProductWise..."
             disabled={disabled}
-            className={`${
-              isRecording 
-                ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
-                : 'bg-primary hover:bg-primary/90'
-            } text-primary-foreground p-2 rounded-xl shadow-lg transition-all duration-200 hover:scale-105 disabled:opacity-50`}
-            type="button"
-          >
-            {isRecording ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
-          </Button>
-          <Button
-            onClick={handleSend}
-            disabled={!message.trim() || disabled || message.trim() === defaultText}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground p-2 rounded-xl shadow-lg transition-all duration-200 hover:scale-105 disabled:opacity-50"
-          >
-            <Send className="h-4 w-4" />
-          </Button>
+            className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none text-[15px]"
+          />
+          <div className="flex gap-1.5">
+            <Button
+              onClick={toggleSpeechRecognition}
+              disabled={disabled}
+              variant="ghost"
+              size="icon"
+              className={`h-8 w-8 rounded-lg transition-colors ${
+                isRecording 
+                  ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90' 
+                  : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+              }`}
+              type="button"
+            >
+              {isRecording ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+            </Button>
+            <Button
+              onClick={handleSend}
+              disabled={!message.trim() || disabled || message.trim() === defaultText}
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent disabled:opacity-30"
+            >
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>
