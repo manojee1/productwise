@@ -6,7 +6,7 @@ interface SuggestedQuestionsProps {
   isVisible?: boolean;
 }
 
-const QUESTIONS = ["How does channel strategy impact pricing ?", "How to become better at storytelling?", "Why do products fail?"];
+const QUESTIONS = ["How does channel strategy impact pricing?", "How to become better at storytelling?", "Why do products fail?"];
 
 export const SuggestedQuestions = ({
   onQuestionClick,
@@ -16,23 +16,22 @@ export const SuggestedQuestions = ({
   const [displayQuestions, setDisplayQuestions] = useState<string[]>([]);
 
   useEffect(() => {
-    // Shuffle questions and select 2 unique ones
     const shuffled = [...QUESTIONS].sort(() => Math.random() - 0.5);
     const selected = shuffled.slice(0, 2);
     setDisplayQuestions(selected);
   }, [refreshTrigger]);
 
   return (
-    <div className={`mb-4 transition-all duration-300 ${isVisible ? 'opacity-100 animate-fade-in' : 'opacity-0 animate-fade-out'}`}>
-      <div className="flex gap-2 justify-center">
+    <div className={`mb-4 transition-opacity duration-200 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+      <div className="flex gap-3 justify-center flex-wrap">
         {displayQuestions.map((question, index) => (
-          <div 
+          <button 
             key={index} 
-            className="bg-glass-bg backdrop-blur-glass border border-glass-border rounded-2xl p-4 shadow-glass hover:shadow-glass-hover transition-all duration-300 cursor-pointer flex-1 max-w-sm"
+            className="bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground hover:bg-secondary transition-colors text-left"
             onClick={() => onQuestionClick(question)}
           >
-            <p className="text-sm text-glass-text">{question}</p>
-          </div>
+            {question}
+          </button>
         ))}
       </div>
     </div>
