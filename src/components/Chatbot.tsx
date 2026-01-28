@@ -100,7 +100,7 @@ export const Chatbot = () => {
     <div className="flex flex-col min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border bg-background sticky top-0 z-10">
-        <div className="max-w-3xl mx-auto px-4 py-4">
+        <div className="max-w-3xl mx-auto px-4 py-4 text-center">
           <h1 className="text-xl font-semibold text-foreground">ProductWise</h1>
           <p className="text-sm text-muted-foreground">AI-powered Product Management Assistant</p>
         </div>
