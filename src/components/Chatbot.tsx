@@ -101,7 +101,7 @@ export const Chatbot = () => {
       {/* Header */}
       <header className="border-b border-border bg-background sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 py-4 text-center">
-          <h1 className="text-xl font-semibold text-foreground">ProductWise</h1>
+          <h1 className="text-2xl font-semibold text-foreground">ProductWise</h1>
           <p className="text-sm text-muted-foreground">AI-powered Product Management Assistant</p>
         </div>
       </header>
@@ -110,7 +110,7 @@ export const Chatbot = () => {
       <main className="flex-1 overflow-y-auto">
         {messages.length === 0 ? (
           <div className="max-w-3xl mx-auto px-4 py-20 text-center">
-            <h2 className="text-2xl font-semibold text-foreground mb-2">How can I help you today?</h2>
+            <h2 className="text-xl font-semibold text-foreground mb-2">How can I help you today?</h2>
             <p className="text-muted-foreground">Ask me anything about product management</p>
           </div>
         ) : (
